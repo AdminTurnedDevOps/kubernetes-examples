@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: kubernetes-example
+    name: kubernetes-examples
   targetNamespace: default
 
