@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginxservice-a
+spec:
+  ingressClassName: nginx-servicea
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginxservice
+            port:
+              number: 8080
+# ---
+# apiVersion: networking.k8s.io/v1beta1
+# kind: Ingress
+# metadata:
+#   name: ingress-myserviceb
+#   annotations:
+#     kubernetes.io/ingress.class: "nginx"
+# spec:
+#   rules:
+#   - host: myserviceb.foo.org
+#     http:
+#       paths:
+#       - path: /
+#         backend:
+#           serviceName: myserviceb
+#           servicePort: 80
