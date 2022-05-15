@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxservice
+spec:
+  selector:
+    app: nginxdeployment
+  ports:
+    - protocol: TCP
+      port: 80
+  type: LoadBalancer
