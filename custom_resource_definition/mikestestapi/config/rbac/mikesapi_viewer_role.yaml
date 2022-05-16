@@ -1,0 +1,20 @@
+# permissions for end users to view mikesapis.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mikesapi-viewer-role
+rules:
+- apiGroups:
+  - simplyanengineer.com
+  resources:
+  - mikesapis
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - simplyanengineer.com
+  resources:
+  - mikesapis/status
+  verbs:
+  - get

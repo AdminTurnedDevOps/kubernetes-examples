@@ -1,0 +1,15 @@
+domain: simplyanengineer.com
+layout:
+- go.kubebuilder.io/v3
+projectName: mikestestapi
+repo: simpylanengineer.com/MikesAPI
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: simplyanengineer.com
+  kind: MikesAPI
+  path: simpylanengineer.com/MikesAPI/api/v1
+  version: v1
+version: "3"

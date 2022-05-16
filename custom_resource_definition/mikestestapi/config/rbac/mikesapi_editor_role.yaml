@@ -1,0 +1,24 @@
+# permissions for end users to edit mikesapis.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mikesapi-editor-role
+rules:
+- apiGroups:
+  - simplyanengineer.com
+  resources:
+  - mikesapis
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - simplyanengineer.com
+  resources:
+  - mikesapis/status
+  verbs:
+  - get
