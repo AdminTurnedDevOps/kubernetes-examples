@@ -1,3 +1,4 @@
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/michael/gitrepos/kubernetes-examples'
 make: Leaving directory `/Users/michael/gitrepos/kubernetes-examples'
  

@@ -10,12 +10,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Mon May 16 10:37:01 2022
+# Make data base, printed on Wed May 18 07:12:02 2022
 
 # Variables
 
 # automatic
- 
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
@@ -40,25 +39,20 @@ sonobuoy = /Users/michael/sonobuoyapp/sonobuoy
 # makefile
 MAKEFILE_LIST := 
 # environment
-VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
-# environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 INFOPATH = /opt/homebrew/share/info:
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/c7/m_mq7b7d6t37zt5fg7gg4hb80000gn/T/vscode-ipc-ff933c7a-dd02-493e-8c0b-c606bcc56d17.sock
+ 
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/c7/m_mq7b7d6t37zt5fg7gg4hb80000gn/T/vscode-ipc-01d20a0b-b500-4591-be29-1b41ec2c9ded.sock
 # environment
 VSCODE_CWD = /
-# environment
-GOPROXY = https://proxy.golang.org,direct
 # environment
 PATH = /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
-# environment
-GOPATH = /Users/michael/go
 # environment
 LaunchInstanceID = 633A6698-4F4C-432B-9A55-CEDFA07869EA
 # environment
@@ -82,7 +76,7 @@ ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
 MANPATH = /opt/homebrew/share/man::
 # environment
-GOMODCACHE = /Users/michael/go/pkg/mod
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /Users/michael
 # default
@@ -92,7 +86,7 @@ VSCODE_CODE_CACHE_PATH = /Users/michael/Library/Application Support/Code/CachedD
 # environment
 LOGNAME = michael
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 ZSH = /Users/michael/.oh-my-zsh
 # environment
@@ -100,7 +94,6 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
- 
 XPC_FLAGS = 0x0
 # default
 MAKE = $(MAKE_COMMAND)
@@ -171,7 +164,7 @@ LANG = C
 # environment
 VSCODE_PID = 712
 # variable set hash-table stats:
-# Load=77/1024=8%, Rehash=0, Collisions=2/98=2%
+# Load=74/1024=7%, Rehash=0, Collisions=1/95=1%
 
 # Pattern-specific Variable Values
 
@@ -195,7 +188,6 @@ all:
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
- 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
@@ -254,6 +246,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Mon May 16 10:37:01 2022
+# Finished Make data base on Wed May 18 07:12:02 2022
 
  
