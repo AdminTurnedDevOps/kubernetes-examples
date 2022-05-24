@@ -1,0 +1,53 @@
+# kind: StorageClass
+# apiVersion: storage.k8s.io/v1
+# metadata:
+#   name: azurefile-csi
+# provisioner: file.csi.azure.com
+# allowVolumeExpansion: true
+# mountOptions:
+#   - dir_mode=0777
+#   - file_mode=0777
+#   - uid=0
+#   - gid=0
+#   - mfsymlinks
+#   - cache=strict
+#   - actimeo=30
+# parameters:
+#   skuName: Premium_LRS
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azurefile
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: azurefile-csi
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginxdeployment
+spec:
+  selector:
+    matchLabels:
+      app: nginxdeployment
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginxdeployment
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        volumeMounts:
+          - mountPath: /mnt/azure
+            name: azure
+      volumes:
+      - name: azure
+        persistentVolumeClaim:
+          claimName: azurefile
