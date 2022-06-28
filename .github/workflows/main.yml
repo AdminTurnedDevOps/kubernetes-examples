@@ -1,0 +1,17 @@
+name: Dockerfile Vulnerability Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Checkov Dockerfile Scan
+        uses: bridgecrewio/checkov-action@v12.1347.0
+        with:
+          directory: container-image-scanning
+          framework: dockerfile
