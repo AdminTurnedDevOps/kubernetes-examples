@@ -1,0 +1,1 @@
+`kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.3/manifests/ha/install.yaml`
