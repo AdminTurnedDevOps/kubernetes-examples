@@ -48,7 +48,7 @@ func main() {
 					},
 				},
 				Selector: pulumi.StringMap{
-					"app": pulumi.String(conf.Require("deployment")),
+					"app": pulumi.String(conf.Require("appName")),
 				},
 			},
 		})
