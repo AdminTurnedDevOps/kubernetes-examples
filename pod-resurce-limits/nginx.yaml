@@ -9,6 +9,7 @@ spec:
   replicas: 2
   template:
     metadata:
+      namespace: webapp
       labels:
         app: nginxdeployment
     spec:
@@ -21,6 +22,5 @@ spec:
             cpu: "250m"
           limits:
             memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 80

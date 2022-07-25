@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: golangapp
+  name: webapp
 ---
 apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: memorylimit
-  namespace: golangapp
+  namespace: webapp
 spec:
   hard:
     requests.memory: 512Mi

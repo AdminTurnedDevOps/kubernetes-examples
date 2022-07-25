@@ -1,0 +1,7 @@
+config:
+  nginxmanifest:containerName: nginx
+  nginxmanifest:appName: nginx
+  nginxmanifest:deployment: nginxdeployment
+  nginxmanifest:imageName: nginx:latest
+  nginxmanifest:replicaCount: 2
+  nginxmanifest:service: nginxsvc
