@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+   kind: Issuer
+   metadata:
+     name: letsencrypt-staging
+   spec:
+     acme:
+       server: https://localhost
+       email: user@example.com
+       privateKeySecretRef:
+         name: nginxingresscertsecretr
+       solvers:
+       - http01:
+           ingress:
+             class:  nginx

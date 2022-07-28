@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	appsv1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/apps/v1"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/meta/v1"
@@ -58,7 +60,8 @@ func main() {
 		}
 
 		ctx.Export("name", deployment.Metadata.Elem().Name())
-		ctx.Export("name", service.Metadata.Elem().Name())
+		fmt.Println(service)
+		// ctx.Export("name", service.Metadata.Elem().Name())
 
 		return nil
 	})
