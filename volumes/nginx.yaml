@@ -23,9 +23,9 @@ kind: Service
 metadata:
   name: nginxservice
 spec:
-  type: ClusterIP
   selector:
     app: nginxdeployment
   ports:
     - protocol: TCP
       port: 80
+  type: LoadBalancer
