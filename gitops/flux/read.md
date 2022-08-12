@@ -1,6 +1,8 @@
 ## Specifiy Git credentials
+```
 export GITHUB_TOKEN=<your-token>
 export GITHUB_USER=<your-username>
+```
 
 ## Check Flux Installation
   `flux check --pre`
