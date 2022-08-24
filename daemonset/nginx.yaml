@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-deployment
+spec:
+  # nodeSelecter: Field that you can specifiy what worker nodes you want the Pod to deploy to
+  selector:
+    matchLabels:
+      app: nginxdeployment
+  template:
+    metadata:
+      labels:
+        app: nginxdeployment
+    spec:
+      containers:
+      - name: nginxdeployment
+        image: nginx:latest
+        ports:
+        - containerPort: 80

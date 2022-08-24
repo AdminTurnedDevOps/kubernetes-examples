@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: nginxpod
-  namespace: levantest
 spec:
   containers:
   - image: nginx:latest
     name: nginxpod
-  serviceAccountName: app1serviceaccount
+  serviceAccountName: podcreator
+  automountServiceAccountToken: false
