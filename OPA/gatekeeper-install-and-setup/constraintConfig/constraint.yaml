@@ -1,0 +1,11 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: blocklatesttag
+metadata:
+  name: nolatestcontainerimage
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    annotation: "no-latest-tag-used"

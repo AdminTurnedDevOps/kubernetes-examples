@@ -1,0 +1,1 @@
+The constraint itself is taking the template and bringing it to life. It allows you to utilize the template to create your own policy.

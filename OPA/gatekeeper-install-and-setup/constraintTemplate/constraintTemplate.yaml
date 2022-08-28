@@ -1,0 +1,21 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: blocklatesttag
+  annotations:
+    description: Blocks container images from using the latest tag
+spec:
+  crd:
+    spec:
+      names:
+        kind: blocklatesttag # this must be the same name as the name on metadata.name (line 4)
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package blocklatesttag
+        violation[{"msg": msg, "details": {}}]{
+        input.review.object.kind == "Pod"
+        imagename := input.review.object.spec.containers[_].image
+        endswith(imagename,"latest")
+        msg := "Images with tag the tag \"latest\" is not allowed"
+        }
