@@ -1,0 +1,13 @@
+kubectl create -f - <<EOF
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: testapp-nginx
+  namespace: default
+spec:
+  secretName: testapp-nginx-certificate
+  issuerRef:
+    name: letsencrypt-testing
+  dnsNames:
+  - mikelevan.demo.com
+EOF

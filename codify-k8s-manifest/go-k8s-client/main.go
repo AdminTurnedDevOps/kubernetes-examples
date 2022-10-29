@@ -32,15 +32,18 @@ func main() {
 	// Build a working client from a fixed Kubeconfig
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
-		log.Fatalln("Client coudl not be built from Kubeconfig. Check that Kubeconfig exists...")
+		log.Fatalln("Client could not be built from Kubeconfig. Check that Kubeconfig exists...")
 	}
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err)
 	}
 
-	deploymentsClient := clientset.AppsV1().Deployments(apiv1.NamespaceDefault)
+	// Kubernetes Deployment resource client
+	namespace := "test"
+	deploymentsClient := clientset.AppsV1().Deployments(namespace)
 
+	// Deployment spec
 	deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "nginxdeployment",
@@ -49,13 +52,13 @@ func main() {
 			Replicas: int32Ptr(2),
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{
-					"app": "nginxdeployment",
+					"app": "nginxdeployment1",
 				},
 			},
 			Template: apiv1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						"app": "nginxdeployment",
+						"app": "nginxdeployment1",
 					},
 				},
 				Spec: apiv1.PodSpec{

@@ -1,3 +1,4 @@
+kubectl apply -f - <<EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,3 +30,4 @@ spec:
     - protocol: TCP
       port: 80
   type: NodePort
+EOF

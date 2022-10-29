@@ -1,0 +1,25 @@
+kubectl create -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echo-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-testing"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - mikelevan.demo.com
+    secretName: mikelevandemo
+  rules:
+    - host: mikelevan.demo.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: nginxservice
+                port:
+                  number: 80
+EOF

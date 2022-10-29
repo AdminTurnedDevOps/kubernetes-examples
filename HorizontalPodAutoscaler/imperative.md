@@ -1,0 +1,1 @@
+`kubectl autoscale deployment nginx-deployment --cpu-percent=75 --min=2 --max=10`
