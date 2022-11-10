@@ -1,4 +1,4 @@
-NAMESPACE=ingress-basic
+NAMESPACE=ingress-system
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update

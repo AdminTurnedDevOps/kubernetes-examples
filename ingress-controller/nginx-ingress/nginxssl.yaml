@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginxservice-a
+spec:
+  ingressClassName: nginx-servicea
+  tls:
+  - hosts:
+    - sample.com
+    secretName: secret-where-my-ssl-cert-lives
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /nginxappa
+        pathType: Prefix
+        backend:
+          service:
+            name: nginxservice
+            port:
+              number: 8080
