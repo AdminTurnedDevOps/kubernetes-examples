@@ -1,0 +1,667 @@
+#!/bin/bash
+
+ZRT=zrt
+
+function help {
+
+cat << EndOfMessage
+
+Usage:
+  kubectl $ZRT [command]
+
+Failover Test Commands:
+  failover-test          Start a Failover Test
+  stop-test              Stop a Failover Test
+  
+Failover Live Commands (for multi-site VPGs):
+  failover-live          Start failover live (test before commit)
+  commit                 Commit failover live
+  rollback               Rollback failover live test before commit
+  
+Move Commands (for multi-site VPGs):
+  move                   Start Move live (test before commit)
+  commit-move            Commit Move
+  rollback-move          Rollback Move test before commit
+  
+Production Restore Commands:
+  restore                Start a restore
+  commit-restore         Commit a restore    
+  rollback-restore       Rollback a restore
+  
+LTR Commands:
+  ltr-restore            Restore from LTR
+  ltr-backup   	         Manual LTR Backup
+  ltr-refresh-backupsets Refresh local backup sets from backup repository
+  
+Additional Commands:
+  tag                    Tag Checkpoint
+  force-delete           Force Delete a VPG
+  
+Tweaks:
+  set-tweak 	         Override a tweak value
+  get-potential-tweaks   Get possible tweak/config keys
+  
+Examples:
+  kubectl $ZRT failover-test vpg1 latest
+  kubectl $ZRT stop-test vpg1
+  kubectl $ZRT tag vpg1 cp1
+  kubectl $ZRT restore vpg1 cp1
+  kubectl $ZRT commit-restore vpg1
+  kubectl $ZRT ltr-backup vpg1 cp1
+  kubectl $ZRT ltr-restore backupsetid site storageclass namespace
+  kubectl $ZRT ltr-refresh-backupsets backup-repository-yaml-file
+  kubectl $ZRT set-tweak key value
+  
+  
+Getting information from Zerto API Resources directly:
+  kubectl get vpgs
+  kubectl get ztasks
+  kubectl get vras
+  kubectl get zvolumes
+  kubectl get sites
+  kubectl get backupsets
+  
+Search Checkpoints using labelSelector:
+  kubectl get checkpoints --selector="vpg=vpgs;minAge=5m;maxAge=3d"
+  Age format : Minutes : m ,   Hours : h ,   Days : d
+  vpg is mandatory , minAge and maxAge are optional
+  
+Log collection
+  kubectl $ZRT collect-logs <case number or name>
+  
+Helpers:
+  kubectl $ZRT get cps - wrapper for getting checkpoints (old syntax)
+  kubectl $ZRT get id - returns the unique environment ID (for support)
+
+Setting VRA tweaks configmap:
+  kubectl create configmap -n zerto vratweaks --from-file=tweaks_extension.txt  
+         
+EndOfMessage
+	
+}
+
+specific_help() {
+	subject=$1
+		
+	if 
+		[ "$subject" = "failover-test" ]
+	then	
+	    echo "start failover test"
+		echo "Usage:"
+		echo "kubectl zrt failover-test <vpg> <checkpoint> [namespace]"
+		echo "   - checkpoint: can be either tag, ID, or ""latest"""
+		echo "   - namespace(optional): namespace for created entities. If not provided fot suffix will be added to source namespace"
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "stop-test" ]
+	then	
+	    echo "stop an active failover test for a vpg"
+		echo "Usage:"
+		echo "kubectl zrt stop-test <vpg>"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "restore" ]
+	then	
+	    echo "Perform production restore"
+		echo "Replace production entities with an earlier version"
+		echo "Usage:"
+		echo "kubectl zrt restore <vpg> <checkpoint>"
+		echo "   - checkpoint: can be either tag, ID, or ""latest"""		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "commit-restore" ]
+	then	
+	    echo "Commit production restore"
+		echo "Usage:"
+		echo "kubectl zrt commit-restore <vpg>"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "rollback-restore" ]
+	then	
+	    echo "Roll back a production restore"
+		echo "Usage:"
+		echo "kubectl zrt rollback-restore <vpg>"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "failover-live" ]
+	then	
+	    echo "start failover live"
+		echo "Usage:"
+		echo "kubectl zrt failover-live <vpg> <checkpoint> [namespace]"
+		echo "   - checkpoint: can be either tag, ID, or ""latest"""
+		echo "   - namespace(optional): namespace for created entities. If not provided the source namespace will be used"
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "commit" ]
+	then	
+	    echo "Commit failover live"
+		echo "Usage:"
+		echo "kubectl zrt commit <vpg>"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "rollback" ]
+	then	
+	    echo "Roll back failover live"
+		echo "Usage:"
+		echo "kubectl zrt rollback <vpg>"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "move" ]
+	then	
+	    echo "start move"
+		echo "Usage:"
+		echo "kubectl zrt move <vpg> [namespace]"		
+		echo "   - namespace(optional): namespace for created entities. If not provided the source namespace will be used"
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "commit-move" ]
+	then	
+	    echo "Commit Move"
+		echo "Usage:"
+		echo "kubectl zrt commit-move <vpg> [ delete-source ]"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "rollback-move" ]
+	then	
+	    echo "Roll back move"
+		echo "Usage:"
+		echo "kubectl zrt rollback-move <vpg>"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "tag" ]
+	then	
+	    echo "Tag - create a named checkpoint"
+		echo "Usage:"
+		echo "kubectl tag <vpg> <checkpoint name>"				
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "ltr-backup" ]
+	then	
+	    echo "Perform manual LTR (Backup) task on a given checkpoint"
+		echo "Usage:"
+		echo "kubectl ltr-backup <vpg> <checkpoint name>"	
+		echo "   - checkpoint: can be either tag, ID, or ""latest"""		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "ltr-restore" ]
+	then	
+	    echo "Restore from LTR back up set"
+		echo "Usage:"
+		echo "kubectl ltr-restore <backupset id> <site> <storageclass> <namespace>"		
+		echo "   - backupset - previously created by manual or scheduled LTR backup (query using kubectl get backupsets)"
+		echo "   - site - site to recover to. Can be any site in the system"
+		echo "   - storageclass - storage class for recovered persistent volumes"
+		echo "   - namespace - namespace for restored resources"
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "ltr-refresh-backupsets" ]
+	then	
+	    echo "Refresh local backup sets from backup repository"
+		echo "Usage:"
+		echo "kubectl ltr-refresh-backupsets <backup-repository-yaml-file>"		
+		echo "   - backup-repository-yaml-file - yaml file describing the backup repository to sync from"
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "set-tweak" ]
+	then	
+	    echo "Set a system variable value (tweak/config)"
+		echo "Usage:"
+		echo "kubectl set-tweak <key> <value>"		
+		echo "   - key - query potential keys using kubectl zrt get-potential-tweaks"		
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "get-potential-tweaks" ]
+	then	
+	    echo "Gets the potential Tweak/Config variables (keys)"
+		echo "Usage:"
+		echo "kubectl get-potential-tweaks"				
+		exit 0	
+	fi
+	if 
+		[ "$subject" = "force-delete" ]
+	then	
+	    echo "Force Delete a VPG (use with caution)"
+		echo "Usage:"
+		echo "kubectl force-delete <vpg>"				
+		exit 0	
+	fi	    
+	
+	echo "no specific help subject provided"
+	exit 0
+}
+
+
+		  
+set -e
+
+
+
+
+##############
+## seperate command line params		  
+##############
+realparams=()
+flags=""
+numargs=$#
+i=1
+while [ $i -le $numargs ]
+do
+cur="${@:$i:1}"
+if [[ $cur == "--"* ]]; then  
+  flags+=($cur)
+  flags="$flags $cur"  
+  if [[ $cur != *"="* ]]; then  
+    i=$[$i+1]
+    cur="${@:$i:1}"
+    flags="$flags $cur"	
+  fi
+else  
+  realparams+=($cur)
+fi
+i=$[$i+1]
+done
+
+
+numparams="${#realparams[*]}"
+
+if [ $numparams -lt 1 ]
+then
+    help
+    exit 1
+fi	
+
+param1=${realparams[0]}
+
+if 
+	[ "$param1" = "get-potential-tweaks" ]	
+then
+	kubectl get ztweaks --selector="all"
+	exit 0
+fi
+
+if [ $numparams -lt 2 ]
+then
+    help
+    exit 1
+fi		   
+
+
+param2=${realparams[1]}
+param3=${realparams[2]}
+
+#BASEKUBECTL="echo"
+BASEKUBECTL="kubectl"
+KUBECTL="$BASEKUBECTL $flags"
+RAWPREFIX=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+
+
+if 
+	[ "$param1" = "help" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	specific_help $param2
+	echo
+	exit 0
+fi
+
+####################################
+####################################
+## FAILOVER TEST
+####################################
+####################################
+
+if 
+	[ "$param1" = "failover-test" ]
+then
+	if [ $numparams -lt 3 ]
+	then
+		help
+		exit 1
+	fi
+	if [ $numparams -gt 3 ]
+	then
+		nsparam="?ns=${realparams[3]}"
+	fi
+	
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/starttest/$param2/$param3$nsparam"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "stop-test" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/stoptest/$param2"
+	echo
+	exit 0
+fi
+
+####################################
+####################################
+## PRODUCTION RESTORE
+####################################
+####################################
+
+if 
+	[ "$param1" = "restore" ]
+then
+	if [ $numparams -lt 3 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/restore/test/$param2/$param3"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "commit-restore" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/restore/commit/$param2"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "rollback-restore" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/restore/rollback/$param2"
+	echo
+	exit 0
+fi
+
+####################################
+####################################
+## FAILOVER LIVE
+####################################
+####################################
+
+if 
+	[ "$param1" = "failover-live" ]
+then
+	if [ $numparams -lt 3 ]
+	then
+		help
+		exit 1
+	fi
+	if [ $numparams -gt 3 ]
+	then
+		nsparam="?ns=${realparams[3]}"
+	fi
+		
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/startlive/$param2/$param3$nsparam"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "commit" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/livecommit/$param2"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "rollback" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/liverollback/$param2"
+	echo
+	exit 0
+fi
+
+####################################
+####################################
+## MOVE
+####################################
+####################################
+
+if 
+	[ "$param1" = "move" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	if [ $numparams -gt 2 ]
+	then
+		nsparam="?ns=${realparams[2]}"
+	fi
+		
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/move/$param2$nsparam"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "commit-move" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	if [ $numparams -gt 2 ]
+	then
+	  if 
+	    [ "$param3" = "delete-source" ]
+      then
+		deletesrcparam="?deleteSourcePvc=true"
+	  fi
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/movecommit/$param2$deletesrcparam"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "rollback-move" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi	
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/moverollback/$param2"
+	echo
+	exit 0
+fi
+
+
+####################################
+####################################
+## OTHERS
+####################################
+####################################
+
+if 
+	[ "$param1" = "tag" ]
+then
+	if [ $numparams -lt 3 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/checkpoints/$param2/$param3"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "ltr-backup" ]
+then
+	if [ $numparams -lt 3 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/ltrbackup/$param2/$param3"
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "ltr-restore" ]
+then
+	if [ $numparams -lt 5 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgoperations/ltrrestore/${realparams[1]}?site=${realparams[2]}&sc=${realparams[3]}&ns=${realparams[4]}"	
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "ltr-unregister-backupset" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/backupsets/unregister/$param2"	
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "ltr-refresh-backupsets" ]
+then
+	if [ $numparams -lt 2 ]
+	then
+		help
+		exit 1
+	fi
+	echo "$KUBECTL create -f $param2"
+	$KUBECTL create -f $param2
+	echo
+	exit 0
+fi
+
+#helper for get cps or id
+if 
+	[ "$param1" = "get" ]	
+then
+	if 
+		[ "$param2" = "cp" ]	||
+		[ "$param2" = "cps" ] ||
+		[ "$param2" = "checkpoint" ] ||
+		[ "$param2" = "checkpoints" ]
+	then
+		if [ -z $param3 ]
+		then
+			help
+			exit 1
+		fi
+		$KUBECTL ${flags[@]} get checkpoints --selector="vpg=$param3"
+		echo
+		exit 0
+	fi
+	if 
+		[ "$param2" = "id" ]
+	then
+		$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/mgmt/ZkmId"
+		echo
+		exit 0
+	fi
+fi
+
+if 
+	[ "$param1" = "collect-logs" ]	
+then
+	taskid=`$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/mgmt/CollectLogs?caseNum=$param2"`
+	echo "started collection task $taskid"
+	while :
+	do
+		taskstatus=`kubectl get ztasks $taskid -o json | jq -r .items[0].status.status`
+		echo "Collection Task Status : $taskstatus"
+		if [ "$taskstatus" = "Completed" ]; then
+			echo "Collection complete"
+			$KUBECTL get --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/mgmt/LogCollectionResult/$taskid"
+			echo
+			exit 0
+		elif [ "$taskstatus" = "Failed" ]; then
+			echo "Collection Failed"
+			exit 1	
+		fi
+		sleep 1
+	done
+	
+	echo
+	exit 0
+fi
+
+if 
+	[ "$param1" = "set-tweak" ]	
+then
+	echo "kind: ztweak
+apiVersion: z4k.zerto.com/v1
+spec:
+  Key: $param2
+  Value: $param3
+" | $KUBECTL create -f - 
+	exit 0
+fi
+
+if 
+	[ "$param1" = "force-delete" ]	
+then
+	$KUBECTL delete  --raw="$RAWPREFIX/apis/z4k.zerto.com/v1/vpgs/$param2?force=true&sync=false&waitifVpgBusy=true"
+	echo
+	exit 0
+fi
+
+
+
+help
+exit 1
+

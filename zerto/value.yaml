@@ -1,0 +1,11 @@
+global:
+  imagePullSecret: "Y2JkYmVlYTQtMGNkMS00OTNkLWFmOTktNmNiYzYxOGVjZDEwOlRaRDZFSFpYamc1YU13aExDZDlBQklBb0lkQXJHRUtUcWdYY1cwVTc="
+  authentication:
+    adminUser: "zerto"
+    adminPassword: "zerto"
+    managementUser: "zerto"
+    managementPassword: "zerto"
+
+zkm-px:
+  config:
+    siteId: "gke_site1"
