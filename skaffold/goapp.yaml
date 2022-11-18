@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-webapp
+spec:
+  selector:
+    matchLabels:
+      app: gowebapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: gowebapp
+    spec:
+      containers:
+      - name: gowebapp
+        image: thenjdevopsguy/gowebappskaffold
+        ports:
+        - containerPort: 8080
