@@ -17,7 +17,7 @@ az storage share create \
 
 echo $ACI_PERS_STORAGE_ACCOUNT_NAME
 
-STORAGE_KEY=$(az storage account keys list --resource-group $ACI_PERS_RESOURCE_GROUP --account-name $ACI_PERS_STORAGE_ACCOUNT_NAME --query "[0].value" --output tsv)
+STORAGE_KEY=$(az storage account keys list --resource-group $ACA_PERS_RESOURCE_GROUP --account-name $ACA_PERS_STORAGE_ACCOUNT_NAME --query "[0].value" --output tsv)
 echo $STORAGE_KEY
 
 az extension add --name containerapp --upgrade

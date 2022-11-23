@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Fri Nov 18 08:18:37 2022
+# Make data base, printed on Wed Nov 23 08:05:58 2022
 
 # Variables
 
@@ -236,7 +236,7 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Fri Nov 18 08:18:37 2022
+# Finished Make data base on Wed Nov 23 08:05:58 2022
 
  
 make: *** No rule to make target `all'.  Stop.
