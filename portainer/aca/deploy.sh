@@ -4,6 +4,8 @@ ACA_PERS_LOCATION=eastus
 ACA_PERS_SHARE_NAME=portainerdata
 CONTAINERAPPS_ENVIRONMENT=portainertest1
 
+az extension add --name containerapp --upgrade
+
 az storage account create \
     --resource-group $ACA_PERS_RESOURCE_GROUP \
     --name $ACA_PERS_STORAGE_ACCOUNT_NAME \
@@ -19,8 +21,6 @@ echo $ACI_PERS_STORAGE_ACCOUNT_NAME
 
 STORAGE_KEY=$(az storage account keys list --resource-group $ACA_PERS_RESOURCE_GROUP --account-name $ACA_PERS_STORAGE_ACCOUNT_NAME --query "[0].value" --output tsv)
 echo $STORAGE_KEY
-
-az extension add --name containerapp --upgrade
 
 az containerapp env create \
   --name $CONTAINERAPPS_ENVIRONMENT \
