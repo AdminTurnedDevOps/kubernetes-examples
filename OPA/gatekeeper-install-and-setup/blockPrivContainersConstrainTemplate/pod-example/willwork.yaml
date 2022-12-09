@@ -1,3 +1,4 @@
+## this config will work because it doesn't have the latest tag
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,10 +12,11 @@ spec:
     metadata:
       labels:
         app: nginxdeployment
-        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: nginxdeployment
-        image: nginx:latest
+        image: nginx:1.23.1
         ports:
         - containerPort: 80
+      securityContext:  
+        privileged: false
