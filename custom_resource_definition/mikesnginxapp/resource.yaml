@@ -1,0 +1,7 @@
+apiVersion: simplyengineering.com/v1
+kind: MikesNginxApp
+metadata:
+  name: mikesapptest
+spec:
+  image: nginx:latest
+  replicas: 2
