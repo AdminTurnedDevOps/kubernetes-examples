@@ -30,6 +30,6 @@ zkm-px:
 
 `chmod +x kubectl-zrt`
 
-`cp kubectl-zrt /usr/bin`
+`mv kubectl-zrt zrt`
 
 `kubectl zrt`

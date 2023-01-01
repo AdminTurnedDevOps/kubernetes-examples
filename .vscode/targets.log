@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Wed Dec 14 14:05:03 2022
+# Make data base, printed on Sun Jan  1 10:01:21 2023
 
 # Variables
 
@@ -34,8 +34,6 @@ sonobuoy = /Users/michael/sonobuoyapp/sonobuoy
 # makefile
 MAKEFILE_LIST := 
 # environment
-EDGE_BROWSER_PID = 646
-# environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
@@ -46,13 +44,11 @@ VSCODE_CWD = /
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # environment
-PATH = /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion Tech Preview.app/Contents/Public:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+PATH = /Users/michael/.rd/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion Tech Preview.app/Contents/Public:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 GOPATH = /Users/michael/go
-# environment
-LaunchInstanceID = 030FCA1B-A557-4D5D-8DA6-144A3125D384
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
@@ -76,7 +72,7 @@ HOME = /Users/michael
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/michael/Library/Application Support/Code/CachedData/5235c6bb189b60b01b1f49062f4ffa42384f8c91
+VSCODE_CODE_CACHE_PATH = /Users/michael/Library/Application Support/Code/CachedData/1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a
 # environment
 LOGNAME = michael
 # environment
@@ -114,7 +110,7 @@ TMPDIR = /var/folders/c7/m_mq7b7d6t37zt5fg7gg4hb80000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/michael/Library/Application Support/Code/1.74.0-main.sock
+VSCODE_IPC_HOOK = /Users/michael/Library/Application Support/Code/1.74.1-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -124,7 +120,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.39750313.39750319
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.41503155.41503161
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
@@ -145,8 +141,6 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186b0
 # automatic
 ^F = $(notdir $^)
 # default
@@ -158,9 +152,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 28345
+VSCODE_PID = 1008
 # variable set hash-table stats:
-# Load=74/1024=7%, Rehash=0, Collisions=2/95=2%
+# Load=71/1024=7%, Rehash=0, Collisions=2/92=2%
 
 # Pattern-specific Variable Values
 
@@ -168,9 +162,9 @@ VSCODE_PID = 28345
 
 # Directories
 
-# . (device 16777230, inode 14779675): 49 files, no impossibilities.
+# . (device 16777230, inode 14779675): 51 files, no impossibilities.
 
-# 49 files, no impossibilities in 1 directories.
+# 51 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -242,7 +236,7 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Wed Dec 14 14:05:03 2022
+# Finished Make data base on Sun Jan  1 10:01:21 2023
 
  
 make: *** No rule to make target `all'.  Stop.

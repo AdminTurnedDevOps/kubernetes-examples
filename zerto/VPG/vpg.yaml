@@ -1,0 +1,9 @@
+apiVersion: z4k.zerto.com/v1
+kind: vpg
+spec:
+   Name : gb_vpg
+   SourceSite :
+     Id: "gke_site1"
+   TargetSite :
+     Id: "gke_site1"
+   RecoveryStorageClass : default

@@ -1,0 +1,12 @@
+apiVersion: z4k.zerto.com/v1
+kind: vpg
+spec: 
+  JournalDiskSizeInGb: 120
+  RecoveryStorageClass: GoldSC
+  SourceSite: 
+    Id: gke_site1
+  TargetSite: 
+    Id: gke_site1
+metadata:  
+  name: gb_vpg
+  namespace: zerto
