@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  database:
+    image: mysql:latest
+    restart: always
+    container_name: mysql_container
+    environment:
+      - MYSQL_ROOT_PASSWORD=Password12
+      - MYSQL_DATABASE=testdatabase
+      - MYSQL_ROOT_USER=root
+      - MYSQL_HOST=testdatabase.csx4hqzfwtj2.us-east-1.rds.amazonaws.com
