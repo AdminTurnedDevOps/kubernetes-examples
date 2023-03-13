@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Fri Feb 17 13:04:53 2023
+# Make data base, printed on Mon Mar 13 12:27:22 2023
 
 # Variables
 
@@ -37,8 +37,6 @@ sonobuoy = /Users/michael/sonobuoyapp/sonobuoy
 # makefile
 MAKEFILE_LIST := 
 # environment
-EDGE_BROWSER_PID = 69906
-# environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
@@ -46,6 +44,7 @@ __CFBundleIdentifier = com.microsoft.VSCode
 INFOPATH = /opt/homebrew/share/info:
 # environment
 VSCODE_CWD = /
+ 
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # environment
@@ -55,11 +54,13 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 GOPATH = /Users/michael/go
 # environment
+LaunchInstanceID = 51F6885E-7984-4129-BF5B-B05B2B6821A8
+# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.kalBRb5088/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.qMyJmtarWo/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -146,6 +147,8 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186b2
 # automatic
 ^F = $(notdir $^)
 # default
@@ -157,9 +160,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 274
+VSCODE_PID = 651
 # variable set hash-table stats:
-# Load=72/1024=7%, Rehash=0, Collisions=2/93=2%
+# Load=73/1024=7%, Rehash=0, Collisions=2/94=2%
 
 # Pattern-specific Variable Values
 
@@ -167,9 +170,9 @@ VSCODE_PID = 274
 
 # Directories
 
-# . (device 16777234, inode 14779675): 56 files, no impossibilities.
+# . (device 16777230, inode 14779675): 57 files, no impossibilities.
 
-# 56 files, no impossibilities in 1 directories.
+# 57 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -241,6 +244,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Fri Feb 17 13:04:53 2023
+# Finished Make data base on Mon Mar 13 12:27:22 2023
 
  

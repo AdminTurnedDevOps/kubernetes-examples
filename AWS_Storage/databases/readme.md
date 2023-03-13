@@ -11,7 +11,7 @@ docker container inspect mysql
 ```
 
 ```
-docker run --name mysqlcontainer -p 3306:3306 -e MYSQL_ROOT_USER=root -e MYSQL_ROOT_PASSWORD=Password12 -e MYSQL_DATABASE=testdatabase -e MYSQL_HOST=testdatabase.csx4hqzfwtj2.us-east-1.rds.amazonaws.com mysql:latest
+docker run --name mysqlcontainer -p 3306:3306 -e MYSQL_ROOT_USER=root -e MYSQL_ROOT_PASSWORD=Password1 -e MYSQL_DATABASE=awsfest0101 -e MYSQL_HOST=awsfest0101.csx4hqzfwtj2.us-east-1.rds.amazonaws.com mysql:latest
 ```
 
 ```
@@ -25,8 +25,8 @@ services:
     restart: always
     container_name: mysql_container
     environment:
-      - MYSQL_ROOT_PASSWORD=Password12
-      - MYSQL_DATABASE=testdatabase
+      - MYSQL_ROOT_PASSWORD=Password1
+      - MYSQL_DATABASE=awsfest1010
       - MYSQL_ROOT_USER=root
-      - MYSQL_HOST=testdatabase.csx4hqzfwtj2.us-east-1.rds.amazonaws.com
+      - MYSQL_HOST=awsfest0101.csx4hqzfwtj2.us-east-1.rds.amazonaws.com
 ```
