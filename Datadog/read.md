@@ -6,8 +6,10 @@ helm repo add datadog https://helm.datadoghq.com
 helm repo update
 ```
 
+```
 CLUSTER_NAME=
 API_KEY
+```
 
 ```
 helm install datadog -n datadog \
