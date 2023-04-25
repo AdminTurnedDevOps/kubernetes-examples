@@ -2,7 +2,7 @@
 
 `kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
 
-`kubectl port-forward service/argocd-server :80`
+`kubectl port-forward service/argocd-server 56067:80`
 
 Get your current context for your k8s cluster
 
