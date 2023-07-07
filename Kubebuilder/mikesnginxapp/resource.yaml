@@ -1,7 +1,10 @@
 apiVersion: simplyengineering.com/v1
-kind: MikesNginxApp
+kind: MikesAPI
 metadata:
   name: mikesapptest
 spec:
   image: nginx:latest
   replicas: 2
+  deployment:
+    name: test
+    namespace: default

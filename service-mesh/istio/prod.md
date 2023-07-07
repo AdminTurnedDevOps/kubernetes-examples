@@ -11,7 +11,9 @@ helm install istiod istio/istiod -n istio-system --wait
 
 # Ingress
 kubectl create namespace istio-ingress
+
 kubectl label namespace istio-ingress istio-injection=enabled
+
 helm install istio-ingress istio/gateway -n istio-ingress --wait
 
 # Confirm status

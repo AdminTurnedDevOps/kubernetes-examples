@@ -25,12 +25,16 @@ import (
 
 // MikesAPISpec defines the desired state of MikesAPI
 type MikesAPISpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Image string `json:"image"`
 
-	MikesPhoneNumber string `json:"mikesPhoneNumber"`
+	Replica int `json:"replica"`
 
-	MikesAge string `json:"mikesAge"`
+	Deployment []Namespaced `json:"deployment"`
+}
+
+type Namespaced struct {
+	Name      string `json:"name"`
+	Namespace string `json:"namespace"`
 }
 
 // MikesAPIStatus defines the observed state of MikesAPI
