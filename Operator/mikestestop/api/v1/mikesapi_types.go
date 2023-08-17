@@ -1,5 +1,5 @@
 /*
-Copyright 2022.
+Copyright 2023.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,14 +25,12 @@ import (
 
 // MikesAPISpec defines the desired state of MikesAPI
 type MikesAPISpec struct {
+	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+	// Important: Run "make" to regenerate code after modifying this file
+
+	// Foo is an example field of MikesAPI. Edit mikesapi_types.go to remove/update
+	Image            string `json:"image,omitempty"`
 	MikesPhoneNumber string `json:"mikesPhoneNumber,omitempty"`
-
-	MikesAge int `json:"mikesAge.omitempty"`
-}
-
-type Namespaced struct {
-	Name      string `json:"name"`
-	Namespace string `json:"namespace"`
 }
 
 // MikesAPIStatus defines the observed state of MikesAPI

@@ -1,0 +1,7 @@
+apiVersion: simplyanengineer.com.simplyanengineer.com/v1
+kind: MikesAPI
+metadata:
+  name: mikesapi-sample
+spec:
+  image: 
+  mikesPhoneNumber: 
