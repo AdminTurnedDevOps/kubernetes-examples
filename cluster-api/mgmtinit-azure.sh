@@ -3,7 +3,7 @@ export CLUSTER_TOPOLOGY=true
 ```
 
 ```
-export AZURE_SUBSCRIPTION_ID="220284d2-6a19-4781-87f8-5c564ec4fec9"
+export AZURE_SUBSCRIPTION_ID=""
 
 # Create an Azure Service Principal and paste the output here
 export AZURE_TENANT_ID=""
