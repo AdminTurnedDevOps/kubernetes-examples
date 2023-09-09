@@ -9,7 +9,7 @@ helm repo update
 ```
 
 ```
-helm install kube-prometheus prometheus-community/kube-prometheus-stack
+helm install kube-prometheus -n monitoring prometheus-community/kube-prometheus-stack --create-namespace
 ```
 
 ```
