@@ -1,0 +1,1 @@
+kubectl virt vnc windowsonkubernetes

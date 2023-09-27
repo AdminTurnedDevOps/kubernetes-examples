@@ -1,0 +1,7 @@
+clusterName: aksenvironment01
+stormforge:
+  address: https://api.stormforge.io/
+authorization:
+  issuer: https://api.stormforge.io/
+  clientID: a7e14180045e4e30b3a9d1fd0161ce48
+  clientSecret: .Chg4STDV.9xj4.w8.CRZEjAdS
