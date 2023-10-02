@@ -1,0 +1,13 @@
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: synologytest
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfscsi
+  resources:
+    requests:
+      storage: 2Gi
+EOF
