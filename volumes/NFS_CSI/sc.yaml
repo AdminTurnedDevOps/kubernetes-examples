@@ -1,4 +1,3 @@
-kubectl apply -f - <<EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -12,4 +11,3 @@ volumeBindingMode: Immediate
 mountOptions:
   - hard
   - nfsvers=4.1
-EOF

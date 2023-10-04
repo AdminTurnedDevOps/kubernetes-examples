@@ -1,8 +1,7 @@
-kubectl apply -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: synologytest
+  name: test-pvc
 spec:
   accessModes:
     - ReadWriteMany
@@ -10,4 +9,3 @@ spec:
   resources:
     requests:
       storage: 2Gi
-EOF

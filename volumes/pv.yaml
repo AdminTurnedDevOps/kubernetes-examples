@@ -1,0 +1,11 @@
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-pv
+spec:
+  storageClassName: "nfscsi"
+  claimRef:
+    name: test-pvc
+    namespace: default
+EOF
