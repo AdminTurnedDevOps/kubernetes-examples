@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AdminTurnedDevOps/PearsonCourses.git
+    path: GitOps-For-Kubernetes/Section6/lab/nginx
+    helm:
+      releaseName: nginxtest
+  destination:
+    # If the app is being deployed to a remote Kubernetes cluster, it would look like this:
+    # server: "https://ip_or_loadbalancer_of_control_plane:8443"
+    server: "https://kubernetes.default.svc"
+    namespace: default

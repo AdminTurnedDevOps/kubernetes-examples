@@ -1,0 +1,47 @@
+kubectl apply -f - <<EOF
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  generation: 1
+  labels:
+    kubevirt.io/os: windows
+  name: windowsonkubernetes
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: vm1
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - cdrom:
+              bus: sata
+            bootOrder: 1
+            name: iso
+          - disk:
+              bus: virtio
+            name: harddrive
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: virtio-drivers
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 4096M
+      volumes:
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhd
+      - name: iso
+        containerDisk:
+          image: adminturneddevops/winkube:latest
+      - name:  virtio-drivers
+        containerDisk:
+          image: kubevirt/virtio-container-disk
+EOF

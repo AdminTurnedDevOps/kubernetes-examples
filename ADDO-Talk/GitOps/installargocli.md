@@ -1,0 +1,1 @@
+https://argo-cd.readthedocs.io/en/stable/cli_installation/
