@@ -1,4 +1,19 @@
 ```
+helm repo add crossplane-stable https://charts.crossplane.io/stable
+```
+
+```
+helm repo update
+```
+
+```
+helm install crossplane \
+crossplane-stable/crossplane \
+--namespace crossplane-system \
+--create-namespace
+```
+
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
@@ -50,12 +65,12 @@ cat <<EOF | kubectl create -f -
 apiVersion: network.azure.upbound.io/v1beta1
 kind: VirtualNetwork
 metadata:
-  name: vnet
+  name: vnettest
 spec:
   forProvider:
     addressSpace:
       - 10.0.0.0/16
     location: "US East"
-    resourceGroupName: devrel-as-a-service
+    resourceGroupName: devrelasaservice
 EOF
 ```

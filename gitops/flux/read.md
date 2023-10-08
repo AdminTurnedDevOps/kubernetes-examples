@@ -1,7 +1,7 @@
 ## Specifiy Git credentials
 ```
-export GITHUB_TOKEN=<your-token>
-export GITHUB_USER=<your-username>
+export GITHUB_TOKEN=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
+export GITHUB_USER=adminturneddevops
 ```
 
 ## Check Flux Installation

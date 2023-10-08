@@ -61,6 +61,5 @@ kubectl create namespace sock-shop
 
 kubectl label namespace sock-shop istio-injection=enabled
 
-
 kubectl apply -f complete-demo.yaml
 
