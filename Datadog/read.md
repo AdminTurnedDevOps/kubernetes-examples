@@ -7,8 +7,8 @@ helm repo update
 ```
 
 ```
-CLUSTER_NAME=
-API_KEY
+CLUSTER_NAME=<CLUSTER_NAME>
+API_KEY=<API KEY>
 ```
 
 ```
